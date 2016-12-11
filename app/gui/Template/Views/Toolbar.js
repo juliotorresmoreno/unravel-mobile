@@ -8,8 +8,6 @@ import {
     Text,
     View
 } from 'react-native';
-import styles from "./Styles/Styles.js";
-
 
 export default class Template extends Component {
     actions=[{title: 'Settings', show: 'always'}];
@@ -17,16 +15,13 @@ export default class Template extends Component {
         super(props);
     }
     render = function() { 
-        return ( 
-            <View>
-                <ToolbarAndroid 
-                    logo={require('./Icons/ic_language_black_24px.svg')} 
-                    title="AwesomeApp"
-                    actions={this.actions}
-                    style={styles.Toolbar}
-                    onActionSelected={this.onActionSelected} />
-                <Text>sdf</Text>
-            </View> 
+        return (
+            <ToolbarAndroid 
+                logo={require('./Icons/ic_language_black_24px.svg')} 
+                title="AwesomeApp"
+                actions={this.actions}
+                style={ {height: 50} }
+                onActionSelected={this.onActionSelected} />
         ); 
     }.bind(this);
     onActionSelected = function(position) {
