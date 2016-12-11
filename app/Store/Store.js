@@ -1,18 +1,3 @@
-/*import { createStore } from 'redux';
-
-const reducer = (state = 0, action) => {
-    switch(action.type) {
-        case 'sumar':
-           return state + 1;
-        case 'restar':
-            return state - 1;
-        default:
-            return state;
-    }
-}
-
-export default createStore(reducer);*/
-
 export default class Store {
     constructor(args) {
         var elementos = [];
@@ -21,13 +6,12 @@ export default class Store {
             for(let i in data) {
                 if(data.hasOwnProperty(i)) {
                     state[i] = data[i];
-                    if(update === false) {
-                        return;
-                    }
-                    for(let j = 0; j < elementos.length; j++) {
-                        if(elementos[j].filter.indexOf(i) + 1) {
-                            elementos[j].item.forceUpdate();
-                            break;
+                    if(update !== false) {
+                        for(let j = 0; j < elementos.length; j++) {
+                            if(elementos[j].filter.indexOf(i) + 1) {
+                                elementos[j].item.forceUpdate();
+                                break;
+                            }
                         }
                     }
                 }
@@ -40,4 +24,7 @@ export default class Store {
             elementos.push({item: elemento, filter: filter});
         }.bind(this);
     }
+    addService = function (service) {
+        new service(this);
+    }.bind(this);
 }

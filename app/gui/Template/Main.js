@@ -1,41 +1,24 @@
 "use strict";
 
 import React, { Component } from 'react';
-import {
-    AppRegistry,
-    StyleSheet,
-    ToolbarAndroid,
-    Text,
-    View
-} from 'react-native';
-import styles from "./Styles/Styles.js";
+import { View, Text } from 'react-native';
+import TAuth from './Auth/Main';
+import TNoAuth from './NoAuth/Main';
 
-
-export default class Template extends Component {
+export default class Templates extends Component {
     constructor(props) {
         super(props);
-        this.onActionSelected();
-        this.props.store.enlazar(this, ['location']);
+        this.props.store.enlazar(this, ['session']);
     }
     render = function() { 
-        return ( 
-            <View>
-                <ToolbarAndroid 
-                    logo={require('./Icons/ic_language_black_24px.svg')} 
-                    title={this.props.store.getState().title}
-                    actions={this.actions}
-                    style={styles.Toolbar}
-                    onActionSelected={this.onActionSelected} />
-                <Text>sdf</Text>
-            </View> 
-        ); 
-    }.bind(this);
-    onActionSelected = function() {
-        if(this.props.store.getState().location === "registro") {
-            this.actions=[{title: 'Login', show: 'always', location:"login"}];
+        if(typeof this.props.store.getState().session === 'undefined') {
+            return (
+                <TNoAuth store={this.props.store} />
+            );
         } else {
-            this.actions=[{title: 'Registrate', show: 'always', location:"registro"}];
+            return (
+                <TAuth store={this.props.store} />
+            );
         }
-        this.props.store.setState({location:this.actions[0].location});
     }.bind(this);
 }

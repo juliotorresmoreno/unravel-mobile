@@ -9,19 +9,18 @@ import {
 } from 'react-native';
 import Template from "./app/gui/Template/Main";
 import Store from "./app/Store/Store";
+import Auth from "./app/Services/Auth/Main";
+import config from "./app/config/config";
 
 export default class rwebapp extends Component {
-    state = {};
     constructor(props) {
         super(props);
-        this.almacen = new Store({title: "Ecate"});
-        this.almacen.enlazar(this, ["text"]);
+        this.store = new Store(config);
+        this.store.addService(Auth);
     }
-    render() {
-        return (
-            <Template store={this.almacen} />
-        ); 
-    }
+    render = function() {
+        return <Template store={this.store}/>
+    }.bind(this);
 }
 
 AppRegistry.registerComponent('rwebapp', () => rwebapp);
