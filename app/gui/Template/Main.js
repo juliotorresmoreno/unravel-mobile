@@ -12,16 +12,17 @@ import styles from "./Styles/Styles.js";
 
 
 export default class Template extends Component {
-    actions=[{title: 'Settings', show: 'always'}];
     constructor(props) {
         super(props);
+        this.onActionSelected();
+        this.props.store.enlazar(this, ['location']);
     }
     render = function() { 
         return ( 
             <View>
                 <ToolbarAndroid 
                     logo={require('./Icons/ic_language_black_24px.svg')} 
-                    title="AwesomeApp"
+                    title={this.props.store.getState().title}
                     actions={this.actions}
                     style={styles.Toolbar}
                     onActionSelected={this.onActionSelected} />
@@ -29,9 +30,12 @@ export default class Template extends Component {
             </View> 
         ); 
     }.bind(this);
-    onActionSelected = function(position) {
-        if (position === 0) {
-            
-        } 
+    onActionSelected = function() {
+        if(this.props.store.getState().location === "registro") {
+            this.actions=[{title: 'Login', show: 'always', location:"login"}];
+        } else {
+            this.actions=[{title: 'Registrate', show: 'always', location:"registro"}];
+        }
+        this.props.store.setState({location:this.actions[0].location});
     }.bind(this);
 }

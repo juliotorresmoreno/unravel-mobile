@@ -8,20 +8,19 @@ import {
     View
 } from 'react-native';
 import Template from "./app/gui/Template/Main";
-import store from "./app/store/store";
+import Store from "./app/Store/Store";
 
 export default class rwebapp extends Component {
-    state = {
-        title: "Ecate"
-    }
+    state = {};
     constructor(props) {
         super(props);
-        store.suscribe(this);
+        this.almacen = new Store({title: "Ecate"});
+        this.almacen.enlazar(this, ["text"]);
     }
     render() {
         return (
-            <Template />
-        );
+            <Template store={this.almacen} />
+        ); 
     }
 }
 
