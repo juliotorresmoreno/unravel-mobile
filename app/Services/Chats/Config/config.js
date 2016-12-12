@@ -1,5 +1,6 @@
 "use strict";
 
 export default {
-    list: "/chats"
+    list: "/chats",
+    mensaje: "/chats/mensaje"
 };

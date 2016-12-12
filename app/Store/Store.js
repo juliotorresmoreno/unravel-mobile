@@ -19,7 +19,6 @@ export default class Store {
                     state[i] = data[i];
                     if(update !== false) {
                         for(let j = 0; j < elementos.length; j++) {
-                            console.log(i, elementos[j].filter);
                             if(elementos[j].filter.indexOf(i) + 1) {
                                 if(list.contains(elementos[j]) == false) {
                                     list.push(elementos[j]);

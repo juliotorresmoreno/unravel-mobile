@@ -16,11 +16,13 @@ import Auth from "./app/Services/Auth/Main";
 import Friends from "./app/Services/Friends/Main";
 import Chats from "./app/Services/Chats/Main";
 import Alert from "./app/Services/Alert/Main";
+import Wss from "./app/Services/WebSocket/Main";
 
 export default class rwebapp extends Component {
     constructor(props) {
         super(props);
         this.store = new Store(config);
+        this.store.addService(Wss);
         this.store.addService(Auth);
         this.store.addService(Friends);
         this.store.addService(Chats);

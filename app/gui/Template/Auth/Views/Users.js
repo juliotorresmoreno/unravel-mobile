@@ -26,7 +26,7 @@ export default class Users extends Component {
     renderRow = function(data) {
         return (
             <TouchableOpacity onPress={this.onPressUser}>
-                <View style={styles.UserItem} key={data._id}>
+                <View style={styles.UserItem} key={data._id} user={data}>
                     <Image
                         style={styles.UserItemImage}
                         source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}} />
@@ -57,7 +57,7 @@ export default class Users extends Component {
         var target = e._targetInst._currentElement.props.children[0];
         this.props.store.setState({
             status: "chatUser",
-            chatUser: target.key
+            chatUser: target.props.user
         });
     }.bind(this);
     goBack = function() {
