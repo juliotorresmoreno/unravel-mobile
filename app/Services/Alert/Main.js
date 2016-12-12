@@ -3,8 +3,11 @@
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
 
-const Msg = {
-    error: function (errores) {
+export default class Msg {
+    constructor(store) {
+        store.alert = this;
+    }
+    error = function (errores) {
         var error = [];
         for(var i in errores) {
             if(errores.hasOwnProperty(i)) {
@@ -20,7 +23,5 @@ const Msg = {
             }
         }
         Alert.alert('Error', error.join('\n'));
-    }.bind(this)
+    }.bind(this);
 };
-
-export default Msg;

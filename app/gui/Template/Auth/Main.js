@@ -2,26 +2,52 @@
 
 import React, { Component } from 'react';
 import {
+    BackAndroid,
     DrawerLayoutAndroid,
     ToolbarAndroid,
     Text,
     View
 } from 'react-native';
 
+import Users from "./Views/Users.js";
 import styles from "./Styles/Styles.js";
 
 export default class TAuth extends Component {
+    Page = <Text>Page</Text>;
     constructor(props) {
         super(props);
+        this.goHome(false);
+        this.props.store.enlazar(this, ['friends', 'location']);
+        this.props.store.friends.get()
+            .catch(function(error) {
+                console.log(error);
+            });
+        BackAndroid.addEventListener('hardwareBackPress', () => {
+            var location = this.props.store.getState().location;
+            var status = this.props.store.getState().status;
+            if (location != 'chats' || status != '') {
+                this.goHome();
+                return true;
+            }
+            return false;
+        });
     }
+    goHome = function (update) {
+        this.props.store.setState({location: 'chats', status: ''}, update);
+    }.bind(this);
     render = function() {
+        switch (this.props.store.getState().location) {
+            case "chats":
+                this.Page = <Users store={this.props.store} />
+                break;
+        }
         var navigationView = ( 
             <View style={{flex: 1, backgroundColor: '#fff'}}>
                 <Text style={{margin: 10, fontSize: 15, textAlign: 'left'}}>
                     I'm in the Drawer!
                 </Text>
             </View> 
-        );
+        ); 
         return (
             <DrawerLayoutAndroid 
                 drawerWidth={300} 
@@ -31,10 +57,7 @@ export default class TAuth extends Component {
                     title={this.props.store.getState().title}
                     style={styles.Toolbar}
                     onActionSelected={this.onActionSelected} />
-                <View style={{flex: 1, alignItems: 'center'}}>
-                    <Text style={{margin: 10, fontSize: 15, textAlign: 'right'}}>Hello</Text>
-                    <Text style={{margin: 10, fontSize: 15, textAlign: 'right'}}>World!</Text>
-                </View>
+                {this.Page}
             </DrawerLayoutAndroid>
         ); 
     }.bind(this);

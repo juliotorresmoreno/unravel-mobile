@@ -9,7 +9,6 @@ import {
     Button,
     View
 } from 'react-native';
-import Alert from "../../../Alert/Main";
 import styles from "../Styles/Styles.js";
 import constantes from "../config/config";
 
@@ -79,7 +78,7 @@ export default class Registro extends Component {
         };
         this.props.store.auth.registro(data)
             .catch((error) => {
-                Alert.error(error);
+                this.props.store.alert.error(error);
             });
     }.bind(this);
 }

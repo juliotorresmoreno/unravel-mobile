@@ -1,6 +1,12 @@
-import constantes from "./config/config";
+import constantes from "./Config/config";
 
 export default class Auth {
+    secure = function(fn) {
+        if(typeof fn !== 'function') {
+            return () => {};
+        }
+        return fn;
+    }.bind(this);
     constructor(store) {
         this.login = function (data) {
             return new Promise((resolve, reject) => {
@@ -17,19 +23,15 @@ export default class Auth {
                 .then((response) => {
                     if(response.success) {
                         store.setState({session: response.session});
-                        if(typeof resolve === 'function') {
-                            resolve(response);
-                        }
+                        this.secure(resolve)(response);
                     } else {
-                        if(typeof reject === 'function') {
-                            reject(response);
-                        }
+                        this.secure(reject)(response);
                     }
                 })
                 .catch((error) => {
-                    if(typeof reject === 'function') {
-                        reject(response);
-                    }
+                    this.secure(reject)({
+                        error:"Ocurrio un error en la red"
+                    });
                 });
             });
         }.bind(this);
@@ -48,19 +50,13 @@ export default class Auth {
                 .then((response) => {
                     if(response.success) {
                         store.setState({session: response.session});
-                        if(typeof resolve === 'function') {
-                            resolve(response);
-                        }
+                        this.secure(resolve)(response);
                     } else {
-                        if(typeof reject === 'function') {
-                            reject(response);
-                        }
+                        this.secure(reject)(response);
                     }
                 })
                 .catch((error) => {
-                    if(typeof reject === 'function') {
-                        reject(response);
-                    }
+                    this.secure(reject)({error:"Ocurrio un error en la red"});
                 });
             });
         }.bind(this);

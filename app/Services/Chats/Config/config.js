@@ -1,5 +1,5 @@
 "use strict";
 
 export default {
-    list: "/amigos"
+    list: "/chats"
 };

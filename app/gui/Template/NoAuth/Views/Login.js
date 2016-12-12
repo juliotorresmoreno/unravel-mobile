@@ -10,7 +10,6 @@ import {
     View
 } from 'react-native';
 
-import Alert from "../../../Alert/Main";
 import styles from "../Styles/Styles";
 import constantes from "../config/config";
 
@@ -21,7 +20,6 @@ export default class Login extends Component {
     };
     constructor(props) {
         super(props);
-        this.props.store.enlazar(this, ['session']);
     }
     render = function() { 
         return (
@@ -52,7 +50,7 @@ export default class Login extends Component {
         };
         this.props.store.auth.login(data)
             .catch((error) => {
-                Alert.error(error);
+                this.props.store.alert.error(error);
             });
     }.bind(this);
 }

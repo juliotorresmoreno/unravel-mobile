@@ -10,12 +10,12 @@ export default class Friends {
     constructor(store) {
         this.get = function(params) {
             return new Promise((resolve, reject) => {
-                var url = store.getState().api + constantes.list;
+                var url = store.getState().api + constantes.list + '/' + params.user;
                 fetch(url, {method: 'GET'})
                     .then((response) => response.json())
                     .then((response) => {
                         if(response.success) {
-                            store.setState({friends: response.data});
+                            store.setState({chatUserDetail: response.data});
                             this.secure(resolve)(response);
                         } else {
                             this.secure(reject)(response);
@@ -24,6 +24,6 @@ export default class Friends {
                     .catch((error) => this.secure(reject)(error));
             });
         }.bind(this);
-        store.friends = this;
+        store.chats = this;
     }
 }
