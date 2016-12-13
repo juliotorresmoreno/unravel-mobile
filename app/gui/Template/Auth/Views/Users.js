@@ -15,10 +15,10 @@ import styles from "../Styles/Styles.js";
 import ChatUser from "./ChatUser";
 
 export default class Users extends Component {
-    state = {};
+    state = {name:"Users"};
     constructor(props) {
         super(props);
-        this.props.store.enlazar(this, ['status']);
+        this.props.store.subscribe(this, ['status']);
         this.DataSource = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
         });

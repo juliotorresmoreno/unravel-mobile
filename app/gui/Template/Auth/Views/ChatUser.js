@@ -21,7 +21,7 @@ export default class chatUser extends Component {
         this.DataSource = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
         });
-        this.props.store.enlazar(this, ['chatUserDetail']);
+        this.props.store.subscribe(this, ['chatUserDetail']);
         this.props.store.setState({chatUserDetail: []});
         this.props.store.chats.get({user:this.props.store.getState().chatUser._id})
             .then((response) => {})

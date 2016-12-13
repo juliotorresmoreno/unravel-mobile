@@ -17,7 +17,7 @@ export default class TAuth extends Component {
     constructor(props) {
         super(props);
         this.goHome(false);
-        this.props.store.enlazar(this, ['friends', 'location']);
+        this.props.store.subscribe(this, ['friends', 'location']);
         this.props.store.friends.get()
             .catch(function(error) {
                 console.log(error);
@@ -32,6 +32,13 @@ export default class TAuth extends Component {
             return false;
         });
     }
+    componentDidMount = function() { 
+        this.mounted = true;
+    }.bind(this);
+    componentWillUnmount = function() {
+        this.mounted = false;
+        this.unsubscribe();
+    }.bind(this);
     goHome = function (update) {
         this.props.store.setState({location: 'chats', status: ''}, update);
     }.bind(this);

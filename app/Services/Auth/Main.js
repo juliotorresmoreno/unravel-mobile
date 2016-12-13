@@ -29,6 +29,7 @@ export default class Auth {
                     }
                 })
                 .catch((error) => {
+                    console.log(error);
                     this.secure(reject)({
                         error:"Ocurrio un error en la red"
                     });
@@ -56,6 +57,7 @@ export default class Auth {
                     }
                 })
                 .catch((error) => {
+                    console.log(error);
                     this.secure(reject)({error:"Ocurrio un error en la red"});
                 });
             });
