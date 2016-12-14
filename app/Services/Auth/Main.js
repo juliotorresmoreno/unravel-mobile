@@ -19,7 +19,9 @@ export default class Auth {
                     }, 
                     body: JSON.stringify(data)
                 })
-                .then((response) => response.json())
+                .then((response) => {
+                    return response.json()
+                })
                 .then((response) => {
                     if(response.success) {
                         store.setState({session: response.session});
@@ -29,7 +31,6 @@ export default class Auth {
                     }
                 })
                 .catch((error) => {
-                    console.log(error);
                     this.secure(reject)({
                         error:"Ocurrio un error en la red"
                     });

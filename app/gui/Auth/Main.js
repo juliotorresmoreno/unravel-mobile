@@ -11,16 +11,29 @@ import {
 
 import Chats from "./Components/Chats/Main.js";
 import styles from "./Styles/Styles.js";
+//import io from 'socket.io-client/socket.io'
 //import WebSocket from 'WebSocket';
+
+const describe = function(obj) {
+    var result = [];
+    for(var i in obj) {
+        if(obj.hasOwnProperty(i)) {
+            result.push(i);
+        }
+    }
+    return result;
+}
 
 export default class TAuth extends Component {
     Page = <Text>Page</Text>;
     constructor(props) {
         super(props);
-        var url = 'http://www.ecate.cf/chats?token=' + this.props.store.getState().session.token;
-        console.log('intento');
+        //var socket = io('localhost:3001', {jsonp: false});
+        //var url = 'ws://www.ecate.cf/chats?token=' + this.props.store.getState().session.token;
+        //var url = 'ws://192.168.1.24/chats?token=' + this.props.store.getState().session.token;
+        //console.log('intento', utl);
         const ws = new WebSocket('ws://www.ecate.cf');
-        //const ws = new WebSocket("ws://echo.websocket.org");
+        //const ws = new WebSocket(url, 'echo-protocol');
         ws.onopen = function() {
             console.log('onopen');
         };
@@ -28,7 +41,8 @@ export default class TAuth extends Component {
             console.log('onmessage');
         }; 
         ws.onerror = function(e) {
-            console.log(e);
+            console.log('onerror');
+            console.log(describe(e));
         }; 
         ws.onclose = function(e) {
             //console.log('onclose', e);
