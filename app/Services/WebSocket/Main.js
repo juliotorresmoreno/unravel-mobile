@@ -3,9 +3,10 @@
 export default class wss {
     constructor(store) {
         var events = [], ws;
-        this.open = function () {
-            if(typeof ws === 'undefined') {
-                ws = new WebSocket(store.getState().servidorwss);
+        this.open = function (token) {
+            if(typeof ws === 'undefined' && token) {
+                var url = store.getState().servidorwss + '?token=' + token;
+                ws = new WebSocket(url);
                 ws.onopen = function() {
                     for (let i = 0; i < events.length; i++) {
                         let element = events[i];
@@ -13,6 +14,7 @@ export default class wss {
                             element.fn();
                         }
                     }
+                    console.log('onopen');
                 }; 
                 ws.onmessage = function(e) {
                     for (let i = 0; i < events.length; i++) {
@@ -28,7 +30,8 @@ export default class wss {
                         if(element.event == 'error') {
                             element.fn(e);
                         }
-                    } 
+                    }
+                    console.log('onerror', url);
                 }; 
                 ws.onclose = function(e) {
                     for (let i = 0; i < events.length; i++) {
@@ -36,7 +39,8 @@ export default class wss {
                         if(element.event == 'close') {
                             element.fn(e);
                         }
-                    } 
+                    }
+                    //console.log('onclose', e);
                 };
             }
         }.bind(this);

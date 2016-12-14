@@ -9,13 +9,30 @@ import {
     View
 } from 'react-native';
 
-import Users from "./Views/Users.js";
+import Chats from "./Components/Chats/Main.js";
 import styles from "./Styles/Styles.js";
+//import WebSocket from 'WebSocket';
 
 export default class TAuth extends Component {
     Page = <Text>Page</Text>;
     constructor(props) {
         super(props);
+        var url = 'http://www.ecate.cf/chats?token=' + this.props.store.getState().session.token;
+        console.log('intento');
+        const ws = new WebSocket('ws://www.ecate.cf');
+        //const ws = new WebSocket("ws://echo.websocket.org");
+        ws.onopen = function() {
+            console.log('onopen');
+        };
+        ws.onmessage = function(e) {
+            console.log('onmessage');
+        }; 
+        ws.onerror = function(e) {
+            console.log(e);
+        }; 
+        ws.onclose = function(e) {
+            //console.log('onclose', e);
+        };
         this.goHome(false);
         this.props.store.subscribe(this, ['friends', 'location']);
         this.props.store.friends.get()
@@ -32,20 +49,13 @@ export default class TAuth extends Component {
             return false;
         });
     }
-    componentDidMount = function() { 
-        this.mounted = true;
-    }.bind(this);
-    componentWillUnmount = function() {
-        this.mounted = false;
-        this.unsubscribe();
-    }.bind(this);
     goHome = function (update) {
         this.props.store.setState({location: 'chats', status: ''}, update);
     }.bind(this);
     render = function() {
         switch (this.props.store.getState().location) {
             case "chats":
-                this.Page = <Users store={this.props.store} />
+                this.Page = <Chats store={this.props.store} />
                 break;
         }
         var navigationView = ( 

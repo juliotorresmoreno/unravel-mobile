@@ -7,7 +7,7 @@ import {
     Text,
     View
 } from 'react-native';
-import Template from "./app/gui/Template/Main";
+import Template from "./app/gui/Main";
 import Store from "./app/Store/Store";
 import config from "./app/config/config";
 

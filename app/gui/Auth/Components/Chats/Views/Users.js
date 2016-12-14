@@ -12,13 +12,11 @@ import {
 } from 'react-native';
 
 import styles from "../Styles/Styles.js";
-import ChatUser from "./ChatUser";
 
 export default class Users extends Component {
     state = {name:"Users"};
     constructor(props) {
         super(props);
-        this.props.store.subscribe(this, ['status']);
         this.DataSource = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
         });
@@ -38,20 +36,15 @@ export default class Users extends Component {
     render = function() {
         var friends = this.props.store.getState().friends || [];
         var dataSource = this.DataSource.cloneWithRows(friends);
-        switch (this.props.store.getState().status) {
-            case "chatUser":
-                return <ChatUser store={this.props.store} />;
-            default:
-                return (
-                    <View>
-                        <ListView
-                            enableEmptySections={true}
-                            style={styles.Container}
-                            dataSource={dataSource}
-                            renderRow={this.renderRow} />
-                    </View>
-                );
-        }
+        return (
+            <View>
+                <ListView
+                    enableEmptySections={true}
+                    style={styles.Container}
+                    dataSource={dataSource}
+                    renderRow={this.renderRow} />
+            </View>
+        );
     }.bind(this);
     onPressUser = function(e) {
         var target = e._targetInst._currentElement.props.children[0];
@@ -60,7 +53,4 @@ export default class Users extends Component {
             chatUser: target.props.user
         });
     }.bind(this);
-    goBack = function() {
-        return true;
-    }
 };

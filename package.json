@@ -8,9 +8,13 @@
   },
   "dependencies": {
     "react": "15.4.1",
+    "react-dom": "^15.4.1",
     "react-native": "0.39.1",
+    "react-native-socketio": "^0.3.0",
     "react-redux": "^4.4.6",
-    "redux": "^3.6.0"
+    "react-websocket": "^1.1.6",
+    "redux": "^3.6.0",
+    "websocket": "^1.0.23"
   },
   "devDependencies": {
     "babel-jest": "17.0.2",

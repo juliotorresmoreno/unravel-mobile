@@ -17,7 +17,6 @@ export default class chatUser extends Component {
     state = {};
     constructor(props) {
         super(props);
-        this.props.store.conection.open();
         this.DataSource = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
         });
