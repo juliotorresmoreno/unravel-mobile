@@ -20,7 +20,7 @@ export default class chatUser extends Component {
         this.DataSource = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
         });
-        this.props.store.subscribe(this, ['chatUserDetail']);
+        this.props.store.subscribe(this, ['chatUserDetail'], "chatUser");
         this.props.store.setState({chatUserDetail: []});
         this.props.store.chats.get({user:this.props.store.getState().chatUser.usuario})
             .then((response) => {})
@@ -33,14 +33,14 @@ export default class chatUser extends Component {
         var session = this.props.store.getState().session; 
         if(data.usuario == user.usuario) {
             return (
-                <View key={data._id}>
+                <View key={data.fecha}>
                     <Text style={{textAlign:'right', color: 'blue'}}>{user.nombres + ' ' + user.apellidos}</Text>
                     <Text style={{textAlign:'right'}}>{data.mensaje}</Text>
                 </View>
             );
         } else {
             return (
-                <View key={data._id}>
+                <View key={data.fecha}>
                     <Text style={{color: 'blue'}}>{session.nombres + ' ' + session.apellidos}</Text>
                     <Text>{data.mensaje}</Text>
                 </View>

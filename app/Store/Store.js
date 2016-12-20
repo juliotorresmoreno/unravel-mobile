@@ -10,26 +10,26 @@ Array.prototype.contains = Array.prototype.contains || function(obj)
 
 export default class Store {
     constructor(args) {
-        var elementos = [];
+        var elementos = {};
         var state = args || {}; 
         this.setState = function (data, update) {
-            var list = [];
+            var list = {};
             for(let i in data) {
                 if(data.hasOwnProperty(i) && state[i] != data[i]) {
                     state[i] = data[i];
                     if(update !== false) {
-                        for(let j = 0; j < elementos.length; j++) {
-                            if(elementos[j].filter.indexOf(i) + 1) {
-                                if(list.contains(elementos[j]) == false) {
-                                    list.push(elementos[j]);
+                        for(let j in elementos) {
+                            if(elementos.hasOwnProperty(j)) {
+                                if(elementos[j].filter.indexOf(i) + 1 || i == "updateAt") {
+                                    list[j] = elementos[j];
                                 }
                             }
                         }
                     }
                 }
             }
-            for(var i = 0; i < list.length; i++) {
-                if(list[i].item.mounted) {
+            for(var i in list) {
+                if(list.hasOwnProperty(i) && list[i].item.mounted) {
                     list[i].item.setState({updateAt:new Date()});
                 }
             }
@@ -37,7 +37,7 @@ export default class Store {
         this.getState = function (data) {
             return state;
         }.bind(this);
-        this.subscribe = function(elemento, filter) {
+        this.subscribe = function(elemento, filter, key) {
             var subscribe = {item: elemento, filter: filter};
             if(typeof elemento === 'undefined') {
                 return;
@@ -67,14 +67,9 @@ export default class Store {
                 }.bind(elemento);
             }
             elemento.unsubscribe = function() {
-                for(var i = 0; i < elementos.length; i++) {
-                    if(elementos[i] === subscribe) {
-                        elementos.slice(i, 1);
-                        return;
-                    }
-                }
+                delete elementos[key];
             };
-            elementos.push(subscribe);
+            elementos[key] = subscribe;
         }.bind(this);
         this.addService = function (service) {
             new service(this);

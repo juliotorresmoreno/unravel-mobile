@@ -28,31 +28,13 @@ export default class TAuth extends Component {
     Page = <Text>Page</Text>;
     constructor(props) {
         super(props);
-        //var socket = io('localhost:3001', {jsonp: false});
-        //var url = 'ws://www.ecate.cf/chats?token=' + this.props.store.getState().session.token;
-        var url = 'ws://192.168.43.85:8080/ws?token=' + this.props.store.getState().session.token;
-        //console.log('intento', utl);
-        //const ws = new WebSocket('ws://www.ecate.cf');
-        const ws = new WebSocket(url);
-        ws.onopen = function() {
-            console.log('onopen');
-        };
-        ws.onmessage = function(e) {
-            console.log('onmessage');
-        }; 
-        ws.onerror = function(e) {
-            console.log('onerror');
-            console.log(describe(e));
-        }; 
-        ws.onclose = function(e) {
-            console.log('onclose', e);
-        };
         this.goHome(false);
-        this.props.store.subscribe(this, ['friends', 'location']);
+        this.props.store.subscribe(this, ['friends', 'location'], "TAuth");
         this.props.store.friends.get()
             .catch(function(error) {
                 console.log(error);
             });
+        this.props.store.conection.open(this.props.store.getState().session.token);
         BackAndroid.addEventListener('hardwareBackPress', () => {
             var location = this.props.store.getState().location;
             var status = this.props.store.getState().status;

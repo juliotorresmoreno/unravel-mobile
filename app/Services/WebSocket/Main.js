@@ -1,5 +1,7 @@
 "use strict";
 
+import { Alert } from 'react-native';
+
 export default class wss {
     constructor(store) {
         var events = [], ws;
@@ -14,14 +16,27 @@ export default class wss {
                             element.fn();
                         }
                     }
-                    console.log('onopen');
                 }; 
-                ws.onmessage = function(e) {
-                    for (let i = 0; i < events.length; i++) {
-                        let element = events[i];
-                        if(element.event == 'message') {
-                            element.fn(e);
-                        }
+                ws.onmessage = function(request) {
+                    var data = JSON.parse(request.data);
+                    switch(data.action) {
+                        case "mensaje":
+                            var users = [data.usuario, data.usuarioReceptor];
+                            var chatUser = store.getState().chatUser;
+                            //console.info();
+                            //Alert.alert('Info', data.mensaje);
+                            if(chatUser !== undefined && users.indexOf(chatUser.usuario)+1) {
+                                store.getState().chatUserDetail.push(data);
+                                store.setState('updateAt', new Date());
+                            } else {
+                                for(var i = 0; i < store.getState().friends; i++) {
+                                    if (store.getState().friends[i].usuario === store.getState().session.usuario) {
+                                        store.getState().friends[i].alert = true;
+                                        store.setState('updateAt', new Date());
+                                    }
+                                }
+                            }
+                            break;
                     }
                 }; 
                 ws.onerror = function(e) {

@@ -22,9 +22,14 @@ export default class Users extends Component {
         });
     }
     renderRow = function(data) {
+        var UserItem = styles.UserItem;
+        if (data.alert == true) {
+            UserItem.backgroundColor = "#F7FE2E";
+            consol.log("alert: " + data.usuario);
+        }
         return (
             <TouchableOpacity onPress={this.onPressUser}>
-                <View style={styles.UserItem} key={data.usuario} user={data}>
+                <View style={UserItem} key={data.usuario} user={data}>
                     <Image
                         style={styles.UserItemImage}
                         source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}} />

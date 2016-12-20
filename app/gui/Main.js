@@ -8,7 +8,7 @@ import TNoAuth from './NoAuth/Main';
 export default class Templates extends Component {
     constructor(props) {
         super(props);
-        this.props.store.subscribe(this, ['session']);
+        this.props.store.subscribe(this, ['session'], "root");
     }
     render = function() { 
         if(typeof this.props.store.getState().session === 'undefined') {

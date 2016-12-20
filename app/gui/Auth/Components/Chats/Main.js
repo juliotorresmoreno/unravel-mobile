@@ -18,8 +18,7 @@ import Users from "./Views/Users";
 export default class Chats extends Component {
     constructor(props) {
         super(props);
-        //this.props.store.conection.open(this.props.store.getState().session.token);
-        this.props.store.subscribe(this, ['status']);
+        this.props.store.subscribe(this, ['status'], "Chats");
     }
     render = function() {
         switch (this.props.store.getState().status) {

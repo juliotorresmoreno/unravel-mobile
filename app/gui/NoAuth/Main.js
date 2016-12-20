@@ -18,7 +18,7 @@ export default class TNoAuth extends Component {
     constructor(props) {
         super(props);
         this.onActionSelected();
-        this.props.store.subscribe(this, ['location']);
+        this.props.store.subscribe(this, ['location'], "TNoAuth");
         this.props.store.setState({location:'login'}, false);
     }
     render = function() {
