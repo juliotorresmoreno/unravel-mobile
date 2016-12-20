@@ -14,18 +14,19 @@ import {
 import styles from "../Styles/Styles.js";
 
 export default class Users extends Component {
-    state = {name:"Users"};
     constructor(props) {
         super(props);
+        this.props.store.subscribe(this, ['friends'], "Users");
         this.DataSource = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
         });
     }
     renderRow = function(data) {
-        var UserItem = styles.UserItem;
+        var UserItem = {};
         if (data.alert == true) {
-            UserItem.backgroundColor = "#F7FE2E";
-            consol.log("alert: " + data.usuario);
+            UserItem = styles.UserItemAlert;
+        } else {
+            UserItem = styles.UserItem;
         }
         return (
             <TouchableOpacity onPress={this.onPressUser}>

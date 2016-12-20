@@ -11,6 +11,12 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         height: 30
     },
+    UserItemAlert: {
+        backgroundColor: "#F7FE2E",
+        flexDirection: 'row',
+        marginBottom: 10,
+        height: 30
+    },
     UserItemImage: {
         width: 30,
         height:30,

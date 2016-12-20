@@ -20,6 +20,7 @@ export default class Store {
                     if(update !== false) {
                         for(let j in elementos) {
                             if(elementos.hasOwnProperty(j)) {
+                                console.log(j, elementos[j].filter);
                                 if(elementos[j].filter.indexOf(i) + 1 || i == "updateAt") {
                                     list[j] = elementos[j];
                                 }

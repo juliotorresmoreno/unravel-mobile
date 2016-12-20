@@ -23,18 +23,22 @@ export default class wss {
                         case "mensaje":
                             var users = [data.usuario, data.usuarioReceptor];
                             var chatUser = store.getState().chatUser;
-                            //console.info();
-                            //Alert.alert('Info', data.mensaje);
                             if(chatUser !== undefined && users.indexOf(chatUser.usuario)+1) {
-                                store.getState().chatUserDetail.push(data);
-                                store.setState('updateAt', new Date());
+                                var chatUserDetail = [];
+                                for(var i = 0; i < store.getState().chatUserDetail.length; i++) {
+                                    chatUserDetail.push(store.getState().chatUserDetail[i]);
+                                }
+                                chatUserDetail.push(data);
+                                store.setState({chatUserDetail: chatUserDetail});
                             } else {
-                                for(var i = 0; i < store.getState().friends; i++) {
-                                    if (store.getState().friends[i].usuario === store.getState().session.usuario) {
-                                        store.getState().friends[i].alert = true;
-                                        store.setState('updateAt', new Date());
+                                var friends = [];
+                                for(var i = 0; i < store.getState().friends.length; i++) {
+                                    friends.push(store.getState().friends[i]);
+                                    if (store.getState().friends[i].usuario === data.usuario) {
+                                        friends[i].alert = true;
                                     }
                                 }
+                                store.setState({friends:friends});
                             }
                             break;
                     }
@@ -46,7 +50,6 @@ export default class wss {
                             element.fn(e);
                         }
                     }
-                    console.log('onerror', url);
                 }; 
                 ws.onclose = function(e) {
                     for (let i = 0; i < events.length; i++) {
@@ -55,7 +58,6 @@ export default class wss {
                             element.fn(e);
                         }
                     }
-                    //console.log('onclose', e);
                 };
             }
         }.bind(this);
