@@ -46,7 +46,7 @@ export default class Login extends Component {
         var state = this.props.store.getState();
         var data = {
             usuario: this.state.usuario,
-            password: this.state.password
+            passwd: this.state.password
         };
         this.props.store.auth.login(data)
             .catch((error) => {

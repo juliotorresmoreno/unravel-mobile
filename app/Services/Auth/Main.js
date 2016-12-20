@@ -8,20 +8,25 @@ export default class Auth {
         return fn;
     }.bind(this);
     constructor(store) {
+        var jsonToUrlEncode = function(data) {
+            var resp = [];
+            for(var i in data) {
+                if(data.hasOwnProperty(i)) {
+                    resp.push(i + "=" + data[i]);
+                }
+            }
+            return resp.join("&");
+        }
         this.login = function (data) {
             return new Promise((resolve, reject) => {
                 var url = store.getState().api + constantes.login;
+                var body = jsonToUrlEncode(data);
                 fetch(url, {
                     method: 'POST', 
-                    headers: { 
-                        'Accept': 'application/json', 
-                        'Content-Type': 'application/json', 
-                    }, 
-                    body: JSON.stringify(data)
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, 
+                    body: body
                 })
-                .then((response) => {
-                    return response.json()
-                })
+                .then((response) => response.json())
                 .then((response) => {
                     if(response.success) {
                         store.setState({session: response.session});
@@ -39,14 +44,12 @@ export default class Auth {
         }.bind(this);
         this.registro = function (data) {
             var url = store.getState().api + constantes.registro;
+            var body = jsonToUrlEncode(data);
             return new Promise((resolve, reject) => {
                 fetch(url, {
                     method: 'POST', 
-                    headers: { 
-                        'Accept': 'application/json', 
-                        'Content-Type': 'application/json', 
-                    }, 
-                    body: JSON.stringify(data)
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, 
+                    body: body
                 })
                 .then((response) => response.json())
                 .then((response) => {
@@ -58,7 +61,6 @@ export default class Auth {
                     }
                 })
                 .catch((error) => {
-                    console.log(error);
                     this.secure(reject)({error:"Ocurrio un error en la red"});
                 });
             });

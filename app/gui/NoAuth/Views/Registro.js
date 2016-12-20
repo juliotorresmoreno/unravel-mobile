@@ -73,8 +73,8 @@ export default class Registro extends Component {
             apellidos: this.state.apellidos,
             usuario: this.state.usuario,
             email: this.state.email,
-            password: this.state.password,
-            password_confirmation: this.state.password_confirmation
+            passwd: this.state.password,
+            passwdConfirm: this.state.password_confirmation
         };
         this.props.store.auth.registro(data)
             .catch((error) => {

@@ -24,7 +24,7 @@ export default class Users extends Component {
     renderRow = function(data) {
         return (
             <TouchableOpacity onPress={this.onPressUser}>
-                <View style={styles.UserItem} key={data._id} user={data}>
+                <View style={styles.UserItem} key={data.usuario} user={data}>
                     <Image
                         style={styles.UserItemImage}
                         source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}} />

@@ -22,7 +22,7 @@ export default class chatUser extends Component {
         });
         this.props.store.subscribe(this, ['chatUserDetail']);
         this.props.store.setState({chatUserDetail: []});
-        this.props.store.chats.get({user:this.props.store.getState().chatUser._id})
+        this.props.store.chats.get({user:this.props.store.getState().chatUser.usuario})
             .then((response) => {})
             .catch((error) => {
                 console.log(error);

@@ -8,6 +8,15 @@ export default class Friends {
         return fn;
     }
     constructor(store) {
+        var jsonToUrlEncode = function(data) {
+            var resp = [];
+            for(var i in data) {
+                if(data.hasOwnProperty(i)) {
+                    resp.push(i + "=" + data[i]);
+                }
+            }
+            return resp.join("&");
+        }
         this.get = function(params) {
             return new Promise((resolve, reject) => {
                 var url = store.getState().api + constantes.list + '/' + params.user;
@@ -30,11 +39,8 @@ export default class Friends {
                     var data = { tipo: 'usuario', usuario: user, mensaje: mensaje };
                     fetch(url, {
                             method: 'POST',
-                            headers: { 
-                                'Accept': 'application/json', 
-                                'Content-Type': 'application/json', 
-                            }, 
-                            body: JSON.stringify(data)
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, 
+                            body: jsonToUrlEncode(data)
                         })
                         .then((response) => response.json())
                         .then((response) => {
@@ -45,7 +51,6 @@ export default class Friends {
                             }
                         })
                         .catch((error) => {
-                            console.log(error);
                             this.secure(reject)(error);
                         });
                 });

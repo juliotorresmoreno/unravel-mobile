@@ -30,10 +30,10 @@ export default class TAuth extends Component {
         super(props);
         //var socket = io('localhost:3001', {jsonp: false});
         //var url = 'ws://www.ecate.cf/chats?token=' + this.props.store.getState().session.token;
-        //var url = 'ws://192.168.1.24/chats?token=' + this.props.store.getState().session.token;
+        var url = 'ws://192.168.43.85:8080/ws?token=' + this.props.store.getState().session.token;
         //console.log('intento', utl);
-        const ws = new WebSocket('ws://www.ecate.cf');
-        //const ws = new WebSocket(url, 'echo-protocol');
+        //const ws = new WebSocket('ws://www.ecate.cf');
+        const ws = new WebSocket(url);
         ws.onopen = function() {
             console.log('onopen');
         };
@@ -45,7 +45,7 @@ export default class TAuth extends Component {
             console.log(describe(e));
         }; 
         ws.onclose = function(e) {
-            //console.log('onclose', e);
+            console.log('onclose', e);
         };
         this.goHome(false);
         this.props.store.subscribe(this, ['friends', 'location']);
