@@ -54,6 +54,11 @@ export default class Users extends Component {
     }.bind(this);
     onPressUser = function(e) {
         var target = e._targetInst._currentElement.props.children[0];
+        for(var i = 0; i < this.props.store.getState().friends.length; i++) {
+            if(this.props.store.getState().friends[i].usuario == target.props.user.usuario) {
+                this.props.store.getState().friends[i].alert = false;
+            }
+        }
         this.props.store.setState({
             status: "chatUser",
             chatUser: target.props.user

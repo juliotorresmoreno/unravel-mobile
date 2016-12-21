@@ -20,10 +20,20 @@ export default class Store {
                     if(update !== false) {
                         for(let j in elementos) {
                             if(elementos.hasOwnProperty(j)) {
-                                console.log(j, elementos[j].filter);
                                 if(elementos[j].filter.indexOf(i) + 1 || i == "updateAt") {
                                     list[j] = elementos[j];
                                 }
+                            }
+                        }
+                    }
+                }
+            }
+            for(var i in list) {
+                if(list.hasOwnProperty(i) && list[i].item.mounted) {
+                    if(Array.isArray(list[i].item.Midlewares)) {
+                        for(var j = 0; j < list[i].item.Midlewares.length; j++) {
+                            if(typeof list[i].item.Midlewares[j] == "function") {
+                                list[i].item.Midlewares[j](state);
                             }
                         }
                     }
@@ -73,7 +83,7 @@ export default class Store {
             elementos[key] = subscribe;
         }.bind(this);
         this.addService = function (service) {
-            new service(this);
+            return new service(this);
         }.bind(this);
     }
 }

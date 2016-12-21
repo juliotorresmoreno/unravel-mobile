@@ -9,8 +9,10 @@ import {
     View
 } from 'react-native';
 
+import NavigationView from "./Views/NavigationView";
 import Chats from "./Components/Chats/Main.js";
 import styles from "./Styles/Styles.js";
+import MidlewareChats from "./Components/Chats/Midleware/Midleware";
 //import io from 'socket.io-client/socket.io'
 //import WebSocket from 'WebSocket';
 
@@ -25,11 +27,13 @@ const describe = function(obj) {
 }
 
 export default class TAuth extends Component {
-    Page = <Text>Page</Text>;
+    Midlewares = [
+        MidlewareChats
+    ];
     constructor(props) {
         super(props);
         this.goHome(false);
-        this.props.store.subscribe(this, ['friends', 'location'], "TAuth");
+        this.props.store.subscribe(this, ['friends', 'location', 'status', 'actions'], "TAuth");
         this.props.store.friends.get()
             .catch(function(error) {
                 console.log(error);
@@ -48,27 +52,24 @@ export default class TAuth extends Component {
     goHome = function (update) {
         this.props.store.setState({location: 'chats', status: ''}, update);
     }.bind(this);
+    onActionSelected = function () {
+
+    }.bind(this);
     render = function() {
         switch (this.props.store.getState().location) {
             case "chats":
                 this.Page = <Chats store={this.props.store} />
                 break;
         }
-        var navigationView = ( 
-            <View style={{flex: 1, backgroundColor: '#fff'}}>
-                <Text style={{margin: 10, fontSize: 15, textAlign: 'left'}}>
-                    I'm in the Drawer!
-                </Text>
-            </View> 
-        ); 
         return (
             <DrawerLayoutAndroid 
                 drawerWidth={300} 
                 drawerPosition={DrawerLayoutAndroid.positions.Left} 
-                renderNavigationView={() => navigationView}>
+                renderNavigationView={() => NavigationView}>
                 <ToolbarAndroid 
                     title={this.props.store.getState().title}
                     style={styles.Toolbar}
+                    actions={this.props.store.getState().actions}
                     onActionSelected={this.onActionSelected} />
                 {this.Page}
             </DrawerLayoutAndroid>

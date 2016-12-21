@@ -21,9 +21,11 @@ export default class wss {
                     var data = JSON.parse(request.data);
                     switch(data.action) {
                         case "mensaje":
+                            var state = store.getState();
                             var users = [data.usuario, data.usuarioReceptor];
-                            var chatUser = store.getState().chatUser;
-                            if(chatUser !== undefined && users.indexOf(chatUser.usuario)+1) {
+                            var chatUser = state.chatUser;
+                            var existe = chatUser !== undefined && users.indexOf(chatUser.usuario)+1;
+                            if(existe && state.status == "chatUser") {
                                 var chatUserDetail = [];
                                 for(var i = 0; i < store.getState().chatUserDetail.length; i++) {
                                     chatUserDetail.push(store.getState().chatUserDetail[i]);
