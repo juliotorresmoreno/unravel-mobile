@@ -20,6 +20,9 @@ export default class wss {
                 ws.onmessage = function(request) {
                     var data = JSON.parse(request.data);
                     switch(data.action) {
+                        case "videollamada":
+                            console.log("videollamada");
+                        break;
                         case "mensaje":
                             var state = store.getState();
                             var users = [data.usuario, data.usuarioReceptor];

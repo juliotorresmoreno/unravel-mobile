@@ -2,5 +2,6 @@
 
 export default {
     list: "/chats",
-    mensaje: "/chats/mensaje"
+    mensaje: "/chats/mensaje",
+    videollamada: "/chats/videollamada"
 };

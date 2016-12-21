@@ -33,7 +33,7 @@ export default class Store {
                     if(Array.isArray(list[i].item.Midlewares)) {
                         for(var j = 0; j < list[i].item.Midlewares.length; j++) {
                             if(typeof list[i].item.Midlewares[j] == "function") {
-                                list[i].item.Midlewares[j](state);
+                                list[i].item.Midlewares[j](this);
                             }
                         }
                     }

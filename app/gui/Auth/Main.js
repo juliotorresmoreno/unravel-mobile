@@ -13,8 +13,6 @@ import NavigationView from "./Views/NavigationView";
 import Chats from "./Components/Chats/Main.js";
 import styles from "./Styles/Styles.js";
 import MidlewareChats from "./Components/Chats/Midleware/Midleware";
-//import io from 'socket.io-client/socket.io'
-//import WebSocket from 'WebSocket';
 
 const describe = function(obj) {
     var result = [];
@@ -52,8 +50,11 @@ export default class TAuth extends Component {
     goHome = function (update) {
         this.props.store.setState({location: 'chats', status: ''}, update);
     }.bind(this);
-    onActionSelected = function () {
-
+    onActionSelected = function (index) {
+        var actions = this.props.store.getState().actions;
+        if (typeof actions[index].handler === 'function') {
+            actions[index].handler(this.props.store);
+        }
     }.bind(this);
     render = function() {
         switch (this.props.store.getState().location) {

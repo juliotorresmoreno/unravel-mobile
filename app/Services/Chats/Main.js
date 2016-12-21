@@ -33,27 +33,49 @@ export default class Friends {
                     .catch((error) => this.secure(reject)(error));
             });
         }.bind(this);
-            this.mensaje = function(user, mensaje) {
-                return new Promise((resolve, reject) => {
-                    var url = store.getState().api + constantes.mensaje;
-                    var data = { tipo: 'usuario', usuario: user, mensaje: mensaje };
-                    fetch(url, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, 
-                            body: jsonToUrlEncode(data)
-                        })
-                        .then((response) => response.json())
-                        .then((response) => {
-                            if(response.success) {
-                                this.secure(resolve)(response);
-                            } else {
-                                this.secure(reject)(response);
-                            }
-                        })
-                        .catch((error) => {
-                            this.secure(reject)(error);
-                        });
-                });
+        this.mensaje = function(user, mensaje) {
+            return new Promise((resolve, reject) => {
+                var url = store.getState().api + constantes.mensaje;
+                var data = { tipo: 'usuario', usuario: user, mensaje: mensaje };
+                fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, 
+                        body: jsonToUrlEncode(data)
+                    })
+                    .then((response) => response.json())
+                    .then((response) => {
+                        if(response.success) {
+                            this.secure(resolve)(response);
+                        } else {
+                            this.secure(reject)(response);
+                        }
+                    })
+                    .catch((error) => {
+                        this.secure(reject)(error);
+                    });
+            });
+        }.bind(this);
+        this.videollamada = function(user) {
+            return new Promise((resolve, reject) => {
+                var url = store.getState().api + constantes.videollamada;
+                var data = { tipo: 'usuario', usuario: user };
+                fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, 
+                        body: jsonToUrlEncode(data)
+                    })
+                    .then((response) => response.json())
+                    .then((response) => {
+                        if(response.success) {
+                            this.secure(resolve)(response);
+                        } else {
+                            this.secure(reject)(response);
+                        }
+                    })
+                    .catch((error) => {
+                        this.secure(reject)(error);
+                    });
+            });
         }.bind(this);
         store.chats = this;
     }
